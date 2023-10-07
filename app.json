@@ -1,10 +1,21 @@
 {
+  "name": "mymeals",
+  "displayName": "mymeals",
   "expo": {
     "name": "Mymeals",
     "slug": "Mymeals",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+
+    "splash": {
+      "image": "./assets/splash_Mymeals.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F77F00"
+    }
   }
+  
 }

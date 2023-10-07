@@ -1,7 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
-import Text from "./src/global/components/Text";
+import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
 
 import {
   Poppins_400Regular,
@@ -12,7 +10,12 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import { ThemeProvider } from "styled-components";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./src/global/config/react-query";
+import { NavigationContainer } from "@react-navigation/native";
+
 import theme from "./src/styles/theme";
+import Routes from "./src/global/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -37,18 +40,16 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <View style={styles.container}>
-        <Text variant="PoppinsBold"> My Meals</Text>
-        <Text variant="PoppinsRegular" fontSize={20} color="PRIMARY">
-          My Meals
-        </Text>
-        <Text variant="PoppinsRegular" fontSize={30} color="RED">
-          My Meals
-        </Text>
-        <StatusBar style="auto" />
-      </View>
-    </ThemeProvider>
+    <>
+      <StatusBar backgroundColor="#F77F00" barStyle="light-content" />
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <QueryClientProvider client={queryClient}>
+            <Routes />
+          </QueryClientProvider>
+        </NavigationContainer>
+      </ThemeProvider>
+    </>
   );
 }
 
