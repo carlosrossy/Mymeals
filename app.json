@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "Mymeals",
+    "slug": "Mymeals",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
