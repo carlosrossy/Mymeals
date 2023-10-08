@@ -9,6 +9,7 @@ import { useMealStorage } from "../../global/hook/meals";
 import { HeaderPages } from "../../global/components/HeaderPages";
 import { DayWeekSelected } from "../../global/components/DayWeekSelected";
 import { MealsItem } from "../../global/components/Meals";
+import { AddMealModal } from "../../global/components/AddMealModal/AddMealModal";
 
 interface selectDay {
   day: string;
@@ -293,14 +294,14 @@ export function Home() {
         {/* <Button onPress={goNewMeal} title="Fazer nova refeição" /> */}
       </SP.Main>
 
-      {/* <Modal visible={isVisibleModalView} transparent>
+      <Modal visible={isVisibleModalView} transparent>
         <SP.ContainerModalView>
           <AddMealModal
             handleCloseModal={closeModalView}
             dataMeal={mealSelectSave}
           />
         </SP.ContainerModalView>
-      </Modal> */}
+      </Modal>
     </SP.Container>
   );
 }
