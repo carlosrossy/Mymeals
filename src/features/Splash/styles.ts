@@ -8,7 +8,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: 80%;
+  height: 72%;
   background-color: ${({ theme }) => theme.colors.PRIMARY};
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
@@ -16,4 +16,16 @@ export const Header = styled.View`
   align-items: center;
   padding-left: 44px;
   padding-right: 44px;
+`;
+
+export const ContainerButton = styled.View`
+  min-width: 300px;
+  max-width: 340px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 16px;
+  align-self: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
 `;

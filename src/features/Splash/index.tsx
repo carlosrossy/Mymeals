@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { StatusBar, Dimensions } from "react-native";
+import * as S from "./styles";
 
 import { Container, Header } from "./styles";
 
@@ -8,9 +9,15 @@ import ImageTelaSplashSvg from "../../assets/icons/imageTelaSplash.svg";
 import Text from "../../global/components/Text";
 import { Logo } from "../../global/components/Logo";
 import { verticalScale } from "../../utils/scale";
+import Button from "../../global/components/Button";
+import { Spacer } from "../../global/components/Spacer";
+
+interface SplashProps {
+  splashLoadingCompleted: () => void;
+}
 
 export function Splash() {
-  const { width, height } = Dimensions.get("window");
+  const screenHeight = Dimensions.get("window").height;
 
   // const { loadStorageHourMeal } = useMealStorage();
 
@@ -43,7 +50,31 @@ export function Splash() {
           fácil e simplificada
         </Text>
       </Header>
-      {/* <ButtonEnter /> */}
+
+      <S.ContainerButton>
+        <Button
+          title="ENTRAR"
+          type="secondary"
+          style={{
+            maxWidth: 340,
+            minWidth: 300,
+          }}
+        />
+
+        <Spacer height={16} />
+
+        <Button
+          title="Cadastra-se"
+          type="primary"
+          style={{
+            maxWidth: 340,
+            minWidth: 300,
+          }}
+        />
+
+        <Spacer height={screenHeight * 0.05} />
+        
+      </S.ContainerButton>
     </Container>
   );
 }
