@@ -21,7 +21,7 @@ interface DataOptionsMealSave {
   selectedCategoryMeal: string;
 }
 
-type MealContextData = {
+export interface MealContextData {
   meals: Record<string, mealDTO[]>;
   hourMeal: InterfaceHourMeals[];
   isLoadNewMeal: boolean;
@@ -30,7 +30,7 @@ type MealContextData = {
   loadMeals: () => Promise<void>;
   saveHourMeals: (data: InterfaceHourMeals[]) => Promise<void>;
   loadHourMeals: () => Promise<void>;
-};
+}
 
 interface MealProviderProps {
   children: ReactNode;
