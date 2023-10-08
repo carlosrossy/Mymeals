@@ -70,6 +70,7 @@ export function Splash() {
             maxWidth: 340,
             minWidth: 300,
           }}
+          onPress={() => navigation.navigate("SingUp")}
         />
 
         <Spacer height={screenHeight * 0.05} />

@@ -10,6 +10,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import Text from "../../../../global/components/Text";
 import { Input } from "../../../../global/components/Input";
+import theme from "../../../../styles/theme";
 
 export function SingIn() {
   const navigation = useNavigation<AuthScreenNavigationProp>();
@@ -29,12 +30,14 @@ export function SingIn() {
         barStyle="dark-content"
         translucent={false}
       />
-      <S.Header top={33}>
-        <TouchableOpacity onPress={() => navigation.navigate("Splash")}>
-          <MaterialIcons name="arrow-back-ios" size={26} color="black" />
+     <S.Header top={33}>
+        <TouchableOpacity onPress={() => navigation.navigate("Splash")} style={{marginTop: -5}}>
+          <MaterialIcons
+            name="arrow-back-ios"
+            size={24}
+            color={theme.colors.TITLE}
+          />
         </TouchableOpacity>
-
-        <Spacer height={20} />
 
         <Text variant="PoppinsMedium" color="TITLE" fontSize={24}>
           Login
@@ -93,6 +96,7 @@ export function SingIn() {
               borderBottomColor: "#5B5B58",
               borderEndColor: "#5B5B58",
               borderStartColor: "#5B5B58",
+              marginTop: -3
             }}
           />
           <Text

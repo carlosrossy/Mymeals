@@ -12,7 +12,6 @@ export const Container = styled.View`
 
 export const Header = styled.View<Itype>`
   top: ${({ top }) => top};
-  width: 100%;
   padding: 0px 23px;
   flex-direction: row;
   align-items: center;
