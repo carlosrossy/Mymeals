@@ -20,7 +20,7 @@ export function DayWeekSelected({ data, onPress }: Props) {
   return (
     <TouchableOpacity onPress={onPress}>
       <Container>
-        <Text variant="PoppinsMedium" fontSize={13} color={textColor}>
+        <Text variant="PoppinsMedium" fontSize={16} color={textColor}>
           {data.day}
         </Text>
 

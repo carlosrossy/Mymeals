@@ -76,22 +76,14 @@ export function Home() {
   }, [meals]);
 
   const renderDayButton = (dayName: string, index: number) => (
-    <View
-      style={{
-        flex: 1,
-        marginRight: index < dayOfWeekNames.length - 1 ? 28 : 0,
+    <DayWeekSelected
+      data={{
+        day: dayName.substring(0, 3).toUpperCase(),
+        selected: selectedDay === index + 1,
       }}
+      onPress={() => setSelectedDay(index + 1)}
       key={dayName}
-    >
-      <DayWeekSelected
-        data={{
-          day: dayName.substring(0, 3).toUpperCase(),
-          selected: selectedDay === index + 1,
-        }}
-        onPress={() => setSelectedDay(index + 1)}
-        key={dayName}
-      />
-    </View>
+    />
   );
 
   return (
@@ -107,14 +99,12 @@ export function Home() {
       />
 
       <S.Main>
-        <S.ContainerListDaysWeek>
-          <FlatList
-            data={dayOfWeekNames}
-            keyExtractor={(day, index) => index.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => renderDayButton(item, index)}
-          />
+        <S.ContainerListDaysWeek
+          style={{ justifyContent: "space-between", flexDirection: "row" }}
+        >
+          {dayOfWeekNames.map((dayName, index) => (
+            <View key={dayName}>{renderDayButton(dayName, index)}</View>
+          ))}
         </S.ContainerListDaysWeek>
       </S.Main>
     </S.Container>
