@@ -8,6 +8,7 @@ import { mealDTO } from "../../dtos/mealDTO";
 import { useMealStorage } from "../../global/hook/meals";
 import { HeaderPages } from "../../global/components/HeaderPages";
 import { DayWeekSelected } from "../../global/components/DayWeekSelected";
+import { MealsItem } from "../../global/components/Meals";
 
 export function Home() {
   const navigation = useNavigation();
@@ -18,6 +19,7 @@ export function Home() {
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const dayWeek = new Date().getDay() + 1;
+
   const monthNames = [
     "Janeiro",
     "Fevereiro",
@@ -55,13 +57,13 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    // Verifique se o índice selecionado não está fora dos limites do array meals
+    console.log("Meals from hook:", meals); // Ad
     if (selectedDay >= 1 && selectedDay <= dayOfWeekNames.length) {
       const selectedDayName = dayOfWeekNames[selectedDay - 1];
-      setDayMealSelect(meals[selectedDayName] || []);
+      const selectedMeals = meals[selectedDayName] || [];
+      setDayMealSelect(selectedMeals);
     }
   }, [meals, selectedDay]);
-
   function openModalView(item: mealDTO) {
     setIsVisibleModalView(true);
     setMealSelectSave(item);
@@ -70,10 +72,6 @@ export function Home() {
   function closeModalView() {
     setIsVisibleModalView(false);
   }
-
-  useEffect(() => {
-    console.log("Meals from hook:", meals);
-  }, [meals]);
 
   const renderDayButton = (dayName: string, index: number) => (
     <DayWeekSelected
@@ -106,6 +104,20 @@ export function Home() {
             <View key={dayName}>{renderDayButton(dayName, index)}</View>
           ))}
         </S.ContainerListDaysWeek>
+
+        <S.ContainerMeals>
+          <FlatList
+            data={dayMealSelect}
+            keyExtractor={(item) => item.meal.meal}
+            renderItem={({ item }) => (
+              <MealsItem
+                data={item.meal}
+                onPress={() => openModalView(item)}
+                date={item.date}
+              />
+            )}
+          />
+        </S.ContainerMeals>
       </S.Main>
     </S.Container>
   );
