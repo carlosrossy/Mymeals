@@ -47,6 +47,8 @@ export function MealsItem({
         variant="PoppinsRegular"
         color="TITLE"
         fontSize={12}
+        marginRight="md"
+        textAlign="right"
         width={verticalScale(55)}
       >
         {meal}
