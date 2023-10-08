@@ -11,12 +11,11 @@ import { Logo } from "../../global/components/Logo";
 import { verticalScale } from "../../utils/scale";
 import Button from "../../global/components/Button";
 import { Spacer } from "../../global/components/Spacer";
-
-interface SplashProps {
-  splashLoadingCompleted: () => void;
-}
+import { useNavigation } from "@react-navigation/native";
+import { AuthScreenNavigationProp } from "../../global/routes/auth.routes";
 
 export function Splash() {
+  const navigation = useNavigation<AuthScreenNavigationProp>();
   const screenHeight = Dimensions.get("window").height;
 
   // const { loadStorageHourMeal } = useMealStorage();
@@ -59,6 +58,7 @@ export function Splash() {
             maxWidth: 340,
             minWidth: 300,
           }}
+          onPress={() => navigation.navigate("SingIn")}
         />
 
         <Spacer height={16} />
@@ -73,7 +73,6 @@ export function Splash() {
         />
 
         <Spacer height={screenHeight * 0.05} />
-        
       </S.ContainerButton>
     </Container>
   );

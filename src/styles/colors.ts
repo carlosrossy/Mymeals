@@ -13,6 +13,9 @@ export const colors = {
 
   RED: "#E73F5D",
   WHITE: "#FFFAFA",
+  GRAY: "#AEAEAE",
+  INPUT_BACKGROUND: "#F4F4F4",
+  GRAY_DARK: "#707070",
 };
 
 export type IColor = keyof typeof colors;

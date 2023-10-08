@@ -4,11 +4,13 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { Splash } from "../../features/Splash";
+import { SingIn } from "../../features/auth/screens/SingIn";
 
 const Stack = createNativeStackNavigator();
 
 export type RootAuthRoutesList = {
   Splash: undefined;
+  SingIn: undefined;
 };
 
 export type AuthScreenNavigationProp =
@@ -21,6 +23,7 @@ export default function AuthRoutes() {
       }}
     >
       <Stack.Screen name="Splash" component={Splash} />
+      <Stack.Screen name="SingIn" component={SingIn} />
       {/* <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="InsertToken" component={InsertToken} />

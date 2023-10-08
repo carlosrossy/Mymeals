@@ -1,6 +1,1 @@
-export type IIconList =
-  | "openEye"
-  | "closeEye"
-  | "DeletContact"
-  ;
-
+export type IIconList = "openEye" | "closeEye";

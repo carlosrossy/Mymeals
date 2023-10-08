@@ -8,6 +8,9 @@ export type ITypecolors =
   | "MARKER"
   | "MARKER_CIRCLE"
   | "RED"
+  | "GRAY"
+  | "GRAY_DARK"
+  | "INPUT_BACKGROUND"
   | "WHITE";
 
 export interface IStyleFontVariant {
