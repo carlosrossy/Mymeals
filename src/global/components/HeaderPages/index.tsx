@@ -42,19 +42,23 @@ export function HeaderPages({
     <Container>
       <HeaderButton isHome={isHome}>
         <ContentPageHome>
-          <Text
-            variant="PoppinsMedium"
-            fontSize={24}
-            color="WHITE"
-            marginBottom="md"
-            marginLeft="md"
-          >{`${dayWeekFormat}`}</Text>
-          <Text
-            variant="PoppinsMedium"
-            fontSize={18}
-            color="WHITE"
-            marginLeft="md"
-          >{`${date} de ${monthFormat}`}</Text>
+          {dayWeekFormat && date && monthFormat && (
+            <>
+              <Text
+                variant="PoppinsMedium"
+                fontSize={24}
+                color="WHITE"
+                marginBottom="md"
+                marginLeft="md"
+              >{`${dayWeekFormat}`}</Text>
+              <Text
+                variant="PoppinsMedium"
+                fontSize={18}
+                color="WHITE"
+                marginLeft="md"
+              >{`${date} de ${monthFormat}`}</Text>
+            </>
+          )}
         </ContentPageHome>
       </HeaderButton>
 

@@ -8,9 +8,10 @@ import * as S from "./styles";
 
 import AvisoSvg from "../../assets/icons/aviso.svg";
 import { HeaderPages } from "../../global/components/HeaderPages";
-import Text from "../../global/components/Text";
 import { Spacer } from "../../global/components/Spacer";
-
+import { MyItemList } from "../../global/components/MyItemList";
+import theme from "../../styles/theme";
+import Text from "../../global/components/Text";
 interface Item {
   id: number;
   title: string;
@@ -142,14 +143,13 @@ export function ShoppingList() {
               fontSize={17}
               textAlign="center"
             >
-              Limpar lista
+              Ops, você ainda não adicionou {"\n"}
+              itens a sua lista de compras!
             </Text>
-            Ops, você ainda não adicionou {"\n"}
-            itens a sua lista de compras!
           </S.ContainerAviso>
         )}
 
-        {/* {loading ? (
+        {loading ? (
           <ActivityIndicator size="large" color={theme.colors.RED} />
         ) : (
           <MyItemList
@@ -159,7 +159,7 @@ export function ShoppingList() {
           />
         )}
 
-        <S.ViewInput>
+        {/* <S.ViewInput>
           <InputPurchases addItem={handleAddItem} />
         </S.ViewInput> */}
       </S.ContainerSecondary>
