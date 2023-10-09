@@ -12,6 +12,7 @@ import { Spacer } from "../../global/components/Spacer";
 import { MyItemList } from "../../global/components/MyItemList";
 import theme from "../../styles/theme";
 import Text from "../../global/components/Text";
+import { InputPurchases } from "../../global/components/InputPurchases";
 interface Item {
   id: number;
   title: string;
@@ -159,9 +160,9 @@ export function ShoppingList() {
           />
         )}
 
-        {/* <S.ViewInput>
+        <S.ViewInput>
           <InputPurchases addItem={handleAddItem} />
-        </S.ViewInput> */}
+        </S.ViewInput>
       </S.ContainerSecondary>
     </S.Container>
   );
