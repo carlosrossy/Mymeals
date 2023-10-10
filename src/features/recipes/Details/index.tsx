@@ -9,15 +9,21 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
-import { HeaderPages } from "../../../global/components/HeaderPages";
+
 import { Spacer } from "../../../global/components/Spacer";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { IRecipe } from "../../../global/routes/RecipesRoutes/recipes.routes";
+import {
+  IRecipe,
+  RecipesScreenNavigationProp,
+} from "../../../global/routes/RecipesRoutes/recipes.routes";
 import { useQuery } from "@tanstack/react-query";
 import { getRecipesDetails } from "../../../services/recipesDetails";
 import theme from "../../../styles/theme";
 import { unitMapping } from "../../../utils/TypeUnit";
+
+import { AntDesign } from "@expo/vector-icons";
 
 interface IParamsRoutes {
   recipe: IRecipe;
@@ -43,7 +49,7 @@ interface IRecipeDetailsResponse {
 }
 
 export function Details() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RecipesScreenNavigationProp>();
   const route = useRoute();
   const { recipe } = route.params as IParamsRoutes;
 
@@ -56,6 +62,14 @@ export function Details() {
   );
 
   const ingredients = ingredientsData?.ingredients || [];
+
+  // const {
+  //     data: instrutionsData,
+  //     isLoading: instructionsLoading,
+  //     isError: instructionsError,
+  //   } = useQuery<IRecipeDetailsResponse>(["instructions", recipe.id], () =>
+  //     getRecipesInstructions(recipe.id)
+  //   );
 
   if (isLoading) {
     return (
@@ -81,42 +95,55 @@ export function Details() {
   }
 
   return (
-    <S.Container>
-      <StatusBar barStyle="light-content" backgroundColor="#003333" />
+    <ScrollView>
+      <S.Container>
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="light-content"
+        />
 
-      <S.RecipeImage source={{ uri: recipe.image }} />
+        <View>
+          <S.ButtonGoBack onPress={navigation.goBack}>
+            <AntDesign name="arrowleft" size={24} color="white" />
+          </S.ButtonGoBack>
+          <S.RecipeImage source={{ uri: recipe.image }} />
+        </View>
 
-      <S.ContentContainer>
-        <Text variant="PoppinsSemiBold" fontSize={24} color="TITLE">
-          {recipe.title}
-        </Text>
-
-        <Spacer height={20} />
-
-        <Text variant="PoppinsMedium" fontSize={18}>
-          Ingredientes:
-        </Text>
-
-        {ingredients.length > 0 ? (
-          ingredients.map((item, index) => (
-            <View key={index}>
-              <Text variant="PoppinsRegular" fontSize={16}>
-                {item.name} - {item.amount.metric.value}{" "}
-                {unitMapping[item.amount.metric.unit]}
-              </Text>
-            </View>
-          ))
-        ) : (
-          <Text
-            variant="PoppinsRegular"
-            fontSize={18}
-            textAlign="center"
-            marginTop="large"
-          >
-            Dados não encontrados
+        <S.ContentContainer>
+          <Text variant="PoppinsSemiBold" fontSize={24} color="TITLE">
+            {recipe.title}
           </Text>
-        )}
-      </S.ContentContainer>
-    </S.Container>
+
+          <Spacer height={20} />
+
+          <S.Section>
+            <Text variant="PoppinsMedium" fontSize={18}>
+              Ingredientes:
+            </Text>
+
+            {ingredients.length > 0 ? (
+              ingredients.map((item, index) => (
+                <View key={index}>
+                  <Text variant="PoppinsRegular" fontSize={16}>
+                    {item.name} - {item.amount.metric.value}{" "}
+                    {unitMapping[item.amount.metric.unit]}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <Text
+                variant="PoppinsRegular"
+                fontSize={18}
+                textAlign="center"
+                marginTop="large"
+              >
+                Dados não encontrados
+              </Text>
+            )}
+          </S.Section>
+        </S.ContentContainer>
+      </S.Container>
+    </ScrollView>
   );
 }

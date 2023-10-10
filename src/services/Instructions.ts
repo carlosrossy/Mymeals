@@ -3,9 +3,9 @@ import axios from "axios";
 // export const API_Key = "67ef36e87a434432ab7f58eccc5d9525";
 export const API_Key = "98898caecf0c44f5bfcad30faed8db57";
 
-export async function getRecipesDetails(recipeId: number) {
+export async function getRecipesInstructions(recipeId: number) {
   const response = await axios.get(
-    `https://api.spoonacular.com/recipes/${recipeId}/ingredientWidget.json`,
+    `https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions`,
     {
       headers: {
         "Content-Type": "application/json",
