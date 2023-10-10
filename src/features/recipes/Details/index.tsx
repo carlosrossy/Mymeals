@@ -1,51 +1,23 @@
 import React, { useState } from "react";
-import * as S from "./styles";
-
-import Text from "../../../global/components/Text";
-import {
-  StatusBar,
-  Image,
-  View,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  ScrollView,
-} from "react-native";
-
-import { Spacer } from "../../../global/components/Spacer";
+import { View, ScrollView, StatusBar, ActivityIndicator } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useQuery } from "@tanstack/react-query";
+import { AntDesign } from "@expo/vector-icons";
+import * as S from "./styles";
+import Text from "../../../global/components/Text";
+import { Spacer } from "../../../global/components/Spacer";
 import {
   IRecipe,
   RecipesScreenNavigationProp,
 } from "../../../global/routes/RecipesRoutes/recipes.routes";
-import { useQuery } from "@tanstack/react-query";
 import { getRecipesDetails } from "../../../services/recipesDetails";
-import theme from "../../../styles/theme";
 import { unitMapping } from "../../../utils/TypeUnit";
-
-import { AntDesign } from "@expo/vector-icons";
-
+import theme from "../../../styles/theme";
+import { IRecipeDetailsResponse } from "../models/ingredients";
+import { InstructionsData } from "../models/instrutions";
+import { getRecipesInstructions } from "../../../services/Instructions";
 interface IParamsRoutes {
   recipe: IRecipe;
-}
-
-interface IIngredient {
-  name: string;
-  image: string;
-  amount: {
-    metric: {
-      value: number;
-      unit: string;
-    };
-    us: {
-      value: number;
-      unit: string;
-    };
-  };
-}
-
-interface IRecipeDetailsResponse {
-  ingredients: IIngredient[];
 }
 
 export function Details() {
@@ -63,15 +35,15 @@ export function Details() {
 
   const ingredients = ingredientsData?.ingredients || [];
 
-  // const {
-  //     data: instrutionsData,
-  //     isLoading: instructionsLoading,
-  //     isError: instructionsError,
-  //   } = useQuery<IRecipeDetailsResponse>(["instructions", recipe.id], () =>
-  //     getRecipesInstructions(recipe.id)
-  //   );
+  const {
+    data: instructionsData,
+    isLoading: instructionsLoading,
+    isError: instructionsError,
+  } = useQuery<InstructionsData>(["instructions", recipe.id], () =>
+    getRecipesInstructions(recipe.id)
+  );
 
-  if (isLoading) {
+  if (isLoading || instructionsLoading) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator size="large" color={theme.colors.PRIMARY} />
@@ -79,7 +51,13 @@ export function Details() {
     );
   }
 
-  if (isError || !ingredients) {
+  if (
+    isError ||
+    !ingredients ||
+    instructionsError ||
+    !instructionsData ||
+    instructionsData.length === 0
+  ) {
     return (
       <S.Container>
         <Text
@@ -138,7 +116,35 @@ export function Details() {
                 textAlign="center"
                 marginTop="large"
               >
-                Dados não encontrados
+                ingredientes não encontrados
+              </Text>
+            )}
+          </S.Section>
+
+          <S.Section>
+            {instructionsData?.length > 0 ? (
+              instructionsData.map((instructionSet, index) => (
+                <View key={index}>
+                  <Text variant="PoppinsSemiBold" fontSize={16}>
+                    {instructionSet.name}
+                  </Text>
+                  {instructionSet.steps.map((step, stepIndex) => (
+                    <View key={stepIndex}>
+                      <Text variant="PoppinsRegular" fontSize={16}>
+                        Passo {step.number}: {step.step}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              ))
+            ) : (
+              <Text
+                variant="PoppinsRegular"
+                fontSize={18}
+                textAlign="center"
+                marginTop="large"
+              >
+                Dados de preparo não encontrados
               </Text>
             )}
           </S.Section>
