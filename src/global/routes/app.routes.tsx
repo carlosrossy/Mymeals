@@ -1,41 +1,72 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home } from "../../features/Home";
 
+import ShopSvg from "../../assets/icons/icon-menu/shoppingList.svg";
 import HomeSvg from "../../assets/icons/icon-menu/home.svg";
 import { ShoppingList } from "../../features/ShoppingList";
+import { Recipes } from "../../features/recipes";
 
 const Tab = createBottomTabNavigator();
 
 export default function AppRoutes() {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerShown: false,
-      }}
+        tabBarActiveTintColor: "#003333",
+        tabBarInactiveTintColor: "#46464C",
+        tabBarIconStyle: { marginTop: 12, marginBottom: 8 },
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
+        tabBarLabelPosition: "below-icon",
+        tabBarLabelStyle: { fontSize: 12, paddingBottom: 12 },
+        tabBarStyle: {
+          backgroundColor: "#FFFFFF",
+          height: "8%",
+          elevation: 5,
+          shadowRadius: 5,
+          shadowOffset: { width: 0, height: 0 },
+          shadowOpacity: 0.1,
+        },
+      })}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused, size }) => (
             <HomeSvg
-              width={18}
-              height={18}
-              fill={focused ? "#003333" : "#003333"}
+              width={size}
+              height={size}
+              fill={focused ? "#003333" : "#CCCCCC"}
             />
           ),
         }}
       />
 
       <Tab.Screen
-        name="ShoppingList"
+        name="Lista de Compras"
         component={ShoppingList}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <HomeSvg
-              width={18}
-              height={18}
-              fill={focused ? "#003333" : "#003333"}
+          tabBarIcon: ({ focused, size }) => (
+            <ShopSvg
+              width={size}
+              height={size}
+              fill={focused ? "#003333" : "#CCCCCC"}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Receitas"
+        component={Recipes}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <ShopSvg
+              width={size}
+              height={size}
+              fill={focused ? "#003333" : "#CCCCCC"}
             />
           ),
         }}
