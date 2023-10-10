@@ -14,8 +14,11 @@ import { BarSearch } from "./components/BarSearch";
 import { useForm } from "react-hook-form";
 
 import Menu from "../../assets/icons/menu_button.svg";
+import { useNavigation } from "@react-navigation/native";
+import { RecipesScreenNavigationProp } from "../../global/routes/RecipesRoutes/recipes.routes";
 
 export function Recipes() {
+  const navigation = useNavigation<RecipesScreenNavigationProp>();
   const { isLoading, isError, data, error } = useQuery(
     ["ShowRecipes"],
     getSearchRecipes
@@ -27,14 +30,14 @@ export function Recipes() {
     }
   }, [isLoading, isError, data]);
 
-  const recipes = data.results;
+  const recipes = data?.results || [];
 
-  const pairedRecipes = [];
-  for (let i = 0; i < recipes.length; i += 2) {
-    const recipe1 = recipes[i];
-    const recipe2 = i + 1 < recipes.length ? recipes[i + 1] : null;
-    pairedRecipes.push([recipe1, recipe2]);
-  }
+  // const pairedRecipes = [];
+  // for (let i = 0; i < recipes.length; i += 2) {
+  //   const recipe1 = recipes[i];
+  //   const recipe2 = i + 1 < recipes.length ? recipes[i + 1] : null;
+  //   pairedRecipes.push([recipe1, recipe2]);
+  // }
 
   const {
     control,
@@ -42,6 +45,12 @@ export function Recipes() {
     register,
     formState: { errors: err },
   } = useForm({});
+
+  const navigateToRecipeDetail = (recipe1) => {
+    if (recipe1) {
+      navigation.navigate("Details", { recipe: recipe1 });
+    }
+  };
 
   return (
     <S.Container>
@@ -73,10 +82,13 @@ export function Recipes() {
         <Spacer height={20} />
 
         <FlatList
-          data={pairedRecipes}
+          data={recipes}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <RecipePair recipe1={item[0]} recipe2={item[1]} />
+            <RecipePair
+              recipe={item}
+              onPress={() => navigateToRecipeDetail(item)}
+            />
           )}
           ListEmptyComponent={() =>
             isLoading ? (

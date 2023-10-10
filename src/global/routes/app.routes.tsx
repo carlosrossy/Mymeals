@@ -4,7 +4,7 @@ import { Home } from "../../features/Home";
 import ShopSvg from "../../assets/icons/icon-menu/shoppingList.svg";
 import HomeSvg from "../../assets/icons/icon-menu/home.svg";
 import { ShoppingList } from "../../features/ShoppingList";
-import { Recipes } from "../../features/recipes";
+import RecipesRoutes from "./RecipesRoutes/recipes.routes";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +60,7 @@ export default function AppRoutes() {
 
       <Tab.Screen
         name="Receitas"
-        component={Recipes}
+        component={RecipesRoutes}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <ShopSvg

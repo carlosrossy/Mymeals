@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const RecipePairContainer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 20px;
   flex: 1;
 `;
