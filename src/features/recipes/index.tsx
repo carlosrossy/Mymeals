@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StatusBar, FlatList, View } from "react-native";
 
 import Text from "../../global/components/Text";
@@ -19,25 +19,23 @@ import { RecipesScreenNavigationProp } from "../../global/routes/RecipesRoutes/r
 
 export function Recipes() {
   const navigation = useNavigation<RecipesScreenNavigationProp>();
-  const { isLoading, isError, data, error } = useQuery(
-    ["ShowRecipes"],
-    getSearchRecipes
-  );
+  const [allRecipes, setAllRecipes] = useState([]);
+  const [page, setPage] = useState(0);
 
-  React.useEffect(() => {
-    if (!isLoading && !isError && data) {
-      console.log(data);
-    }
-  }, [isLoading, isError, data]);
+  const { isLoading, isError, data, error } = useQuery(["ShowRecipes"], () =>
+    getSearchRecipes({ number: 10 })
+  );
 
   const recipes = data?.results || [];
 
-  // const pairedRecipes = [];
-  // for (let i = 0; i < recipes.length; i += 2) {
-  //   const recipe1 = recipes[i];
-  //   const recipe2 = i + 1 < recipes.length ? recipes[i + 1] : null;
-  //   pairedRecipes.push([recipe1, recipe2]);
-  // }
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+
+    getSearchRecipes({ number: 10, offset: nextPage * 20 }).then((newData) => {
+      setAllRecipes((prevRecipes) => [...prevRecipes, ...newData.results]);
+      setPage(nextPage);
+    });
+  };
 
   const {
     control,
@@ -82,7 +80,8 @@ export function Recipes() {
         <Spacer height={20} />
 
         <FlatList
-          data={recipes}
+          numColumns={2}
+          data={allRecipes}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <RecipePair
@@ -104,6 +103,9 @@ export function Recipes() {
               </Text>
             )
           }
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={0.5}
+          style={{ marginBottom: 20 }}
         />
       </S.ContainerRecipes>
     </S.Container>

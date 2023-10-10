@@ -96,9 +96,11 @@ export function Details() {
           <Spacer height={20} />
 
           <S.Section>
-            <Text variant="PoppinsMedium" fontSize={18}>
+            <Text variant="PoppinsSemiBold" color="TITLE" fontSize={18}>
               Ingredientes:
             </Text>
+
+            <Spacer height={10} />
 
             {ingredients.length > 0 ? (
               ingredients.map((item, index) => (
@@ -122,6 +124,10 @@ export function Details() {
           </S.Section>
 
           <S.Section>
+            <Text variant="PoppinsSemiBold" color="TITLE" fontSize={18}>
+              Modo de preparo:
+            </Text>
+
             {instructionsData?.length > 0 ? (
               instructionsData.map((instructionSet, index) => (
                 <View key={index}>
@@ -130,8 +136,19 @@ export function Details() {
                   </Text>
                   {instructionSet.steps.map((step, stepIndex) => (
                     <View key={stepIndex}>
-                      <Text variant="PoppinsRegular" fontSize={16}>
-                        Passo {step.number}: {step.step}
+                      <Text
+                        variant="PoppinsRegular"
+                        fontSize={16}
+                        textAlign="justify"
+                      >
+                        <Text
+                          variant="PoppinsBold"
+                          fontSize={16}
+                          textAlign="justify"
+                        >
+                          Passo {step.number}:
+                        </Text>{" "}
+                        {step.step}
                       </Text>
                     </View>
                   ))}

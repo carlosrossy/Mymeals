@@ -6,6 +6,8 @@ import HomeSvg from "../../assets/icons/icon-menu/home.svg";
 import { ShoppingList } from "../../features/ShoppingList";
 import RecipesRoutes from "./RecipesRoutes/recipes.routes";
 
+import { Ionicons } from "@expo/vector-icons";
+
 const Tab = createBottomTabNavigator();
 
 export default function AppRoutes() {
@@ -63,10 +65,10 @@ export default function AppRoutes() {
         component={RecipesRoutes}
         options={{
           tabBarIcon: ({ focused, size }) => (
-            <ShopSvg
-              width={size}
-              height={size}
-              fill={focused ? "#003333" : "#CCCCCC"}
+            <Ionicons
+              name="ios-restaurant-outline"
+              size={size}
+              color={focused ? "#003333" : "#CCCCCC"}
             />
           ),
         }}

@@ -21,7 +21,7 @@ export default function RecipePair({ recipe, onPress }: RecipePairProps) {
             <S.RecipePairBackground>
               <S.RecipeImage source={{ uri: recipe.image }} />
               <Spacer height={10} />
-              <Text variant="PoppinsMedium" color="TITLE">
+              <Text variant="PoppinsMedium" color="TITLE"  numberOfLines={2} ellipsizeMode="tail" textAlign="center">
                 {recipe.title}
               </Text>
             </S.RecipePairBackground>
