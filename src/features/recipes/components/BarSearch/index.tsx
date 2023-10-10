@@ -12,7 +12,7 @@ interface Props extends TextInputProps {
   width?: string;
   height?: number;
   loading?: boolean;
-  searchCallback: (query: string) => void;
+  searchCallback?: (query: string) => void;
 }
 
 export function BarSearch({

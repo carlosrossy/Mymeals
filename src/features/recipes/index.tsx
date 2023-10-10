@@ -21,12 +21,15 @@ export function Recipes() {
   const navigation = useNavigation<RecipesScreenNavigationProp>();
   const [allRecipes, setAllRecipes] = useState([]);
   const [page, setPage] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
 
-  const { isLoading, isError, data, error } = useQuery(["ShowRecipes"], () =>
+  const { isLoading } = useQuery(["ShowRecipes"], () =>
     getSearchRecipes({ number: 10 })
   );
 
-  const recipes = data?.results || [];
+  const handleSearch = (text) => {
+    setSearchValue(text);
+  };
 
   const handleLoadMore = () => {
     const nextPage = page + 1;
@@ -62,11 +65,14 @@ export function Recipes() {
         <S.Search>
           <View style={{ flex: 1 }}>
             <BarSearch
-              searchCallback={() => console.log("clicou")}
               placeholder="Pesquisar"
               control={control}
               {...register("search")}
-              // errors={errors?.search}
+              value={searchValue}
+              onChangeText={handleSearch}
+              onSubmitEditing={() => {
+                console.log("Pesquisar:", searchValue);
+              }}
             />
           </View>
 
