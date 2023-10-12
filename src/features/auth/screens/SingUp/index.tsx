@@ -4,6 +4,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import * as S from "./styles";
 import { useNavigation } from "@react-navigation/native";
@@ -20,17 +21,41 @@ import { InputMask } from "../../../../global/components/InputMask";
 import { InputDate } from "../../../../global/components/InputDate";
 import { ImagePickerProfile } from "../../../../global/components/ImagePickerProfile";
 
+import { useAuth } from "../../../../global/hook/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchema } from "../../schemas/SingUp";
+import { formatDate } from "../../../../utils/formatDate";
+
 export function SingUp() {
   const navigation = useNavigation<AuthScreenNavigationProp>();
   const [date, setDate] = useState<Date | null>(null);
   const [image, setImage] = useState("");
+  const { registerAccount, isLoading } = useAuth();
+
+  function handleSingUp(data) {
+    const { email, password, name, peso, altura } = data;
+
+    const formattedBirthDate = formatDate(data.birthDate);
+
+    registerAccount(
+      email,
+      password,
+      name,
+      peso,
+      altura,
+      formattedBirthDate,
+      image
+    );
+
+    navigation.navigate("SingIn");
+  }
 
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
   return (
     <S.Container>
@@ -77,7 +102,7 @@ export function SingUp() {
                 value={value}
                 title="Nome"
                 placeholder="Nome"
-                // errors={errors?.name}
+                errors={errors?.name}
               />
             )}
           />
@@ -92,7 +117,7 @@ export function SingUp() {
               <InputMask
                 type={"money"}
                 options={{
-                  precision: 3,
+                  precision: 2,
                   separator: ",",
                   delimiter: ".",
                   unit: "",
@@ -101,6 +126,7 @@ export function SingUp() {
                 value={value}
                 title="Peso"
                 placeholder="Peso"
+                errors={errors?.peso}
               />
             )}
           />
@@ -119,6 +145,8 @@ export function SingUp() {
                 value={value}
                 title="Altura"
                 placeholder="Altura"
+                keyboardType="numeric"
+                errors={errors?.altura}
               />
             )}
           />
@@ -135,6 +163,7 @@ export function SingUp() {
                 onChange={onChange}
                 // errors={errors?.birthDate}
                 editable={true}
+                errors={errors?.birthDate}
               />
             )}
           />
@@ -153,7 +182,7 @@ export function SingUp() {
                 placeholder="E-mail"
                 keyboardType="email-address"
                 autoCapitalize={"none"}
-                //   errors={errors?.email}
+                errors={errors?.email}
               />
             )}
           />
@@ -170,7 +199,7 @@ export function SingUp() {
                 isActivePassword
                 placeholder="Senha"
                 autoCapitalize={"none"}
-                //   errors={errors?.password}
+                errors={errors?.password}
               />
             )}
           />
@@ -189,7 +218,7 @@ export function SingUp() {
                 isActivePassword
                 placeholder="Confirmar senha"
                 autoCapitalize={"none"}
-                // errors={errors?.confirmPassword}
+                errors={errors?.confirmPassword}
               />
             )}
           />
@@ -197,16 +226,14 @@ export function SingUp() {
 
         <S.ContainerButtons>
           <Button
-            //   activeLoad={isLoading}
+            activeLoad={isLoading}
             title="Cadastrar"
             type="secondary"
             style={{
               maxWidth: 340,
               minWidth: 300,
             }}
-            //   onPress={handleSubmit((data) => {
-            //     mutate(data);
-            //   })}
+            onPress={handleSubmit(handleSingUp)}
           />
         </S.ContainerButtons>
       </ScrollView>

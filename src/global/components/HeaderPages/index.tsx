@@ -12,6 +12,9 @@ import HomeSvg from "../../assets/home.svg";
 import BackSvg from "../../assets/arrow_back.svg";
 
 import Text from "../Text";
+import { TouchableOpacity } from "react-native";
+import { useAuth } from "../../hook/auth";
+import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   title?: string;
@@ -21,6 +24,7 @@ type Props = {
   isHome?: boolean;
   date?: Number;
   monthFormat?: string;
+  handleLogOut?: boolean;
 };
 
 export function HeaderPages({
@@ -31,8 +35,10 @@ export function HeaderPages({
   dayWeekFormat,
   date,
   monthFormat,
+  handleLogOut,
 }: Props) {
   const navigation = useNavigation();
+  const { SingOut } = useAuth();
 
   function goBack() {
     navigation.goBack();
@@ -73,6 +79,12 @@ export function HeaderPages({
             {title}
           </Text>
         </ContainerTitle>
+      )}
+
+      {handleLogOut && (
+        <TouchableOpacity onPress={SingOut}>
+          <Ionicons name="log-out" size={20} color="WHITE" />
+        </TouchableOpacity>
       )}
     </Container>
   );

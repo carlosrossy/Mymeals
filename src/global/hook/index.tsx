@@ -8,6 +8,7 @@ import {
 } from "react-native-safe-area-context";
 import theme from "../../styles/theme";
 import { MealProvider } from "./meals";
+import { AuthProvider } from "./auth";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -17,9 +18,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <NavigationContainer>
-          <MealProvider>{children}</MealProvider>
-        </NavigationContainer>
+        <AuthProvider>
+          <NavigationContainer>
+            <MealProvider>{children}</MealProvider>
+          </NavigationContainer>
+        </AuthProvider>
       </SafeAreaProvider>
     </ThemeProvider>
   );

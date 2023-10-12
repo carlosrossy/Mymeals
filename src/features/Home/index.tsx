@@ -10,6 +10,7 @@ import { HeaderPages } from "../../global/components/HeaderPages";
 import { DayWeekSelected } from "../../global/components/DayWeekSelected";
 import { MealsItem } from "../../global/components/Meals";
 import { AddMealModal } from "../../global/components/AddMealModal/AddMealModal";
+import { useAuth } from "../../global/hook/auth";
 
 interface selectDay {
   day: string;
@@ -31,6 +32,10 @@ export function Home() {
 
   const [isVisibleModalView, seIsVisibleModalView] = useState(false);
 
+  const {User} = useAuth();
+
+  console.log(User);
+
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const dayWeek = new Date().getDay() + 1;
@@ -47,8 +52,6 @@ export function Home() {
 
   const [dayMealSelect, setDayMealSelect] = useState<mealDTO[]>([]);
   const [mealSelectSave, setMealSelectSave] = useState<mealDTO>();
-
-  console.log(dayMealSelect);
 
   useEffect(() => {
     loadStorageMeals();
@@ -256,6 +259,7 @@ export function Home() {
         dayWeekFormat={dayWeekFormat}
         date={date}
         monthFormat={monthFormat}
+        handleLogOut={true}
         // handleAbout={handleAbout}
       />
 

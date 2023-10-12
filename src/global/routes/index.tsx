@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AuthRoutes from "../routes/auth.routes";
 import AppRoutes from "./app.routes";
 
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { useAuth } from "../hook/auth";
+
 export default function Routes() {
-  // return <AuthRoutes />;
-  return <AppRoutes />;
+  // const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
+  const { User } = useAuth();
+
+  // useEffect(() => {
+  //   const subscriber = auth().onAuthStateChanged(setUser);
+
+  //   return subscriber;
+  // }, []);
+
+  return User ? <AppRoutes /> : <AuthRoutes />;
 }

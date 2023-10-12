@@ -303,7 +303,6 @@ function MealProvider({ children }: PostProviderProps) {
 
   async function saveStorageMeals(item: dataOptionsMealSave) {
     const dateCurrent = new Date();
-    console.log("Data: " + dateCurrent);
     isSetLoadNewMeal(false);
     const data = {
       id: item.selectedDayWeek,

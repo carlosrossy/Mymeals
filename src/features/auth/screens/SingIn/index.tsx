@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar, Dimensions, TouchableOpacity } from "react-native";
+import { StatusBar, Dimensions, TouchableOpacity, Alert } from "react-native";
 import * as S from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreenNavigationProp } from "../../../../global/routes/auth.routes";
@@ -12,16 +12,28 @@ import Text from "../../../../global/components/Text";
 import { Input } from "../../../../global/components/Input";
 import theme from "../../../../styles/theme";
 
+import auth from "@react-native-firebase/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { validationSchema } from "../../schemas/SingIn";
+import { useAuth } from "../../../../global/hook/auth";
+
 export function SingIn() {
   const navigation = useNavigation<AuthScreenNavigationProp>();
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
+  const { SingIn, islogin, forgotPassword } = useAuth();
 
   const {
     control,
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(validationSchema) });
+
+  function handleSingIn(data) {
+    const { email, password } = data;
+    SingIn(email, password);
+  }
 
   return (
     <S.Container>
@@ -30,8 +42,11 @@ export function SingIn() {
         barStyle="dark-content"
         translucent={false}
       />
-     <S.Header top={33}>
-        <TouchableOpacity onPress={() => navigation.navigate("Splash")} style={{marginTop: -5}}>
+      <S.Header top={33}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Splash")}
+          style={{ marginTop: -5 }}
+        >
           <MaterialIcons
             name="arrow-back-ios"
             size={24}
@@ -59,7 +74,7 @@ export function SingIn() {
               placeholder="E-mail"
               keyboardType="email-address"
               autoCapitalize={"none"}
-              //   errors={errors?.email}
+              errors={errors?.email}
             />
           )}
         />
@@ -76,7 +91,7 @@ export function SingIn() {
               isActivePassword
               placeholder="Senha"
               autoCapitalize={"none"}
-              //   errors={errors?.password}
+              errors={errors?.password}
             />
           )}
         />
@@ -96,7 +111,7 @@ export function SingIn() {
               borderBottomColor: "#5B5B58",
               borderEndColor: "#5B5B58",
               borderStartColor: "#5B5B58",
-              marginTop: -3
+              marginTop: -3,
             }}
           />
           <Text
@@ -120,16 +135,14 @@ export function SingIn() {
 
       <S.ContainerButtons>
         <Button
-          //   activeLoad={isLoading}
           title="ENTRAR"
           type="secondary"
           style={{
             maxWidth: 340,
             minWidth: 300,
           }}
-          //   onPress={handleSubmit((data) => {
-          //     mutate(data);
-          //   })}
+          onPress={handleSubmit(handleSingIn)}
+          activeLoad={islogin}
         />
       </S.ContainerButtons>
     </S.Container>
