@@ -73,7 +73,7 @@ export function Profile() {
 
             <S.InfoContainer>
               <Text variant="PoppinsSemiBold" fontSize={17} color="TITLE">
-                {User.altura}
+                {User.altura} m
               </Text>
             </S.InfoContainer>
           </S.Row>
@@ -87,7 +87,7 @@ export function Profile() {
 
             <S.InfoContainer>
               <Text variant="PoppinsSemiBold" fontSize={17} color="TITLE">
-                {User.peso}
+                {User.peso} kg
               </Text>
             </S.InfoContainer>
           </S.Row>

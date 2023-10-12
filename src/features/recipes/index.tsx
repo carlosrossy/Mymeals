@@ -20,7 +20,7 @@ import { RecipesScreenNavigationProp } from "../../global/routes/RecipesRoutes/r
 export function Recipes() {
   const navigation = useNavigation<RecipesScreenNavigationProp>();
   const [allRecipes, setAllRecipes] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(-1);
   const [searchValue, setSearchValue] = useState("");
 
   const { isLoading } = useQuery(["ShowRecipes"], () =>

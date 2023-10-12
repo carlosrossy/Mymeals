@@ -16,6 +16,7 @@ import theme from "../../../styles/theme";
 import { IRecipeDetailsResponse } from "../models/ingredients";
 import { InstructionsData } from "../models/instrutions";
 import { getRecipesInstructions } from "../../../services/Instructions";
+import { recipesTranslation } from "../translations";
 interface IParamsRoutes {
   recipe: IRecipe;
 }
@@ -72,6 +73,8 @@ export function Details() {
     );
   }
 
+  const translatedTitle = recipe ? recipesTranslation[recipe.title] : "";
+
   return (
     <ScrollView>
       <S.Container>
@@ -90,7 +93,7 @@ export function Details() {
 
         <S.ContentContainer>
           <Text variant="PoppinsSemiBold" fontSize={24} color="TITLE">
-            {recipe.title}
+            {translatedTitle || recipe.title}
           </Text>
 
           <Spacer height={20} />

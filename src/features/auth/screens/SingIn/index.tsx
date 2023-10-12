@@ -35,6 +35,11 @@ export function SingIn() {
     SingIn(email, password);
   }
 
+  function handleForgot(data) {
+    const { email } = data;
+    forgotPassword(email);
+  }
+  
   return (
     <S.Container>
       <StatusBar

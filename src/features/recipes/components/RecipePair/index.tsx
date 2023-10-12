@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styles";
 import Text from "../../../../global/components/Text";
 import { Spacer } from "../../../../global/components/Spacer";
 import { TouchableOpacity } from "react-native";
-
+import { recipesTranslation } from "../../translations";
 interface RecipePairProps {
   recipe: {
     title: string;
@@ -13,6 +13,8 @@ interface RecipePairProps {
 }
 
 export default function RecipePair({ recipe, onPress }: RecipePairProps) {
+  const translatedTitle = recipe ? recipesTranslation[recipe.title] : "";
+
   return (
     <S.RecipePairContainer>
       {recipe && (
@@ -21,8 +23,14 @@ export default function RecipePair({ recipe, onPress }: RecipePairProps) {
             <S.RecipePairBackground>
               <S.RecipeImage source={{ uri: recipe.image }} />
               <Spacer height={10} />
-              <Text variant="PoppinsMedium" color="TITLE"  numberOfLines={2} ellipsizeMode="tail" textAlign="center">
-                {recipe.title}
+              <Text
+                variant="PoppinsMedium"
+                color="TITLE"
+                numberOfLines={2}
+                ellipsizeMode="tail"
+                textAlign="center"
+              >
+                {translatedTitle || recipe.title}
               </Text>
             </S.RecipePairBackground>
           </S.RecipeContainer>
