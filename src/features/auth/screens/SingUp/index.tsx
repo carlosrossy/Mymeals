@@ -25,11 +25,17 @@ import { useAuth } from "../../../../global/hook/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "../../schemas/SingUp";
 import { formatDate } from "../../../../utils/formatDate";
+import GenderPicker, {
+  DropdownOption,
+} from "../../../../global/components/Select";
 
 export function SingUp() {
   const navigation = useNavigation<AuthScreenNavigationProp>();
   const [date, setDate] = useState<Date | null>(null);
   const [image, setImage] = useState("");
+  const [selectedGender, setSelectedGender] = useState<DropdownOption | null>(
+    null
+  );
   const { registerAccount, isLoading } = useAuth();
 
   function handleSingUp(data) {
@@ -44,7 +50,8 @@ export function SingUp() {
       peso,
       altura,
       formattedBirthDate,
-      image
+      image,
+      selectedGender.label
     );
 
     navigation.navigate("SingIn");
@@ -56,6 +63,11 @@ export function SingUp() {
     register,
     formState: { errors },
   } = useForm({ resolver: yupResolver(validationSchema) });
+
+  const handleSelectedGender = (selectedGender: DropdownOption | null) => {
+    setSelectedGender(selectedGender);
+    console.log("Gênero selecionado:", selectedGender);
+  };
 
   return (
     <S.Container>
@@ -127,6 +139,7 @@ export function SingUp() {
                 title="Peso"
                 placeholder="Peso"
                 errors={errors?.peso}
+                maxLength={6}
               />
             )}
           />
@@ -164,6 +177,22 @@ export function SingUp() {
                 // errors={errors?.birthDate}
                 editable={true}
                 errors={errors?.birthDate}
+              />
+            )}
+          />
+
+          <Spacer height={12} />
+
+          <Controller
+            control={control}
+            name="genre"
+            render={({ field: { value, onChange } }) => (
+              <GenderPicker
+                onSelectGender={(selectedGender: any) =>
+                  handleSelectedGender(selectedGender)
+                }
+                onChange={onChange}
+                errors={errors?.genre}
               />
             )}
           />

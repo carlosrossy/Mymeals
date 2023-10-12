@@ -6,6 +6,7 @@ export const validationSchema = Yup.object().shape({
   altura: Yup.string().required("Altura é obrigatória"),
   birthDate: Yup.string().required("Data de Nascimento é obrigatória"),
   email: Yup.string().email("E-mail inválido").required("E-mail é obrigatório"),
+  genre: Yup.string().required("Gênero é obrigatório"),
   password: Yup.string()
     .min(6, "A senha deve ter pelo menos 6 caracteres")
     .required("Senha é obrigatória"),

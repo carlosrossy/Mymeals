@@ -3,10 +3,13 @@ import { Home } from "../../features/Home";
 
 import ShopSvg from "../../assets/icons/icon-menu/shoppingList.svg";
 import HomeSvg from "../../assets/icons/icon-menu/home.svg";
+
 import { ShoppingList } from "../../features/ShoppingList";
 import RecipesRoutes from "./RecipesRoutes/recipes.routes";
+import ProfileRoutes from "./ProfileRoutes/profile.routes";
 
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -67,6 +70,20 @@ export default function AppRoutes() {
           tabBarIcon: ({ focused, size }) => (
             <Ionicons
               name="ios-restaurant-outline"
+              size={size}
+              color={focused ? "#003333" : "#CCCCCC"}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Perfil"
+        component={ProfileRoutes}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <AntDesign
+              name="user"
               size={size}
               color={focused ? "#003333" : "#CCCCCC"}
             />

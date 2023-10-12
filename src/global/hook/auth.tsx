@@ -19,6 +19,7 @@ type User = {
   birthDate: string;
   imageUrl: string;
   email: string;
+  sexo: string;
 };
 
 type AuthContextData = {
@@ -30,7 +31,8 @@ type AuthContextData = {
     peso: string,
     altura: string,
     birthDate: string,
-    imageUrl: string
+    imageUrl: string,
+    sexo: string
   ) => Promise<void>;
   SingOut: () => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
@@ -64,7 +66,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         .get();
 
       if (profile.exists) {
-        const { name, altura, birthDate, email, imageUrl, peso } =
+        const { name, altura, birthDate, email, imageUrl, peso, sexo } =
           profile.data() as User;
 
         const userData = {
@@ -75,6 +77,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           email,
           imageUrl,
           peso,
+          sexo,
         };
 
         await AsyncStorage.setItem(USER_COLLETION, JSON.stringify(userData));
@@ -102,7 +105,8 @@ function AuthProvider({ children }: AuthProviderProps) {
     peso: string,
     altura: string,
     birthDate: string,
-    imageUrl: string
+    imageUrl: string,
+    sexo: string
   ) {
     try {
       setIsLoading(true);
@@ -114,18 +118,18 @@ function AuthProvider({ children }: AuthProviderProps) {
       const userId = userCredential.user.uid;
 
       await firestore().collection("users").doc(userId).set({
+        email,
         name,
         peso,
         altura,
         birthDate,
         imageUrl,
+        sexo,
       });
 
       setIsLoading(false);
 
       Alert.alert("Sucesso", "Seu perfil foi criado com sucesso!");
-
-
     } catch (error) {
       console.error("Erro ao criar conta:", error);
 
