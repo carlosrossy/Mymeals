@@ -32,9 +32,7 @@ export function Home() {
 
   const [isVisibleModalView, seIsVisibleModalView] = useState(false);
 
-  const {User} = useAuth();
-
-  console.log(User);
+  const { User } = useAuth();
 
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
@@ -142,10 +140,6 @@ export function Home() {
   function closeModalView() {
     seIsVisibleModalView(false);
   }
-
-  // function handleAbout(){
-  //     navigation.navigate("SobreHome");
-  // }
 
   const week = [
     { day: "DOM", selected: isSelectDayDomingo },
@@ -260,7 +254,6 @@ export function Home() {
         date={date}
         monthFormat={monthFormat}
         handleLogOut={true}
-        // handleAbout={handleAbout}
       />
 
       <SP.Main>

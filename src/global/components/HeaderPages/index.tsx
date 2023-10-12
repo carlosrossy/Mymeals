@@ -6,15 +6,17 @@ import {
   HeaderButton,
   ContainerTitle,
   ContentPageHome,
+  ProfileImage,
 } from "./styles";
 
 import HomeSvg from "../../assets/home.svg";
-import BackSvg from "../../assets/arrow_back.svg";
+import Profile from "../../../assets/ProfileImage.svg";
 
 import Text from "../Text";
 import { TouchableOpacity } from "react-native";
 import { useAuth } from "../../hook/auth";
 import { Ionicons } from "@expo/vector-icons";
+import { abbreviateDayOfWeek } from "../../../utils/formatDate";
 
 type Props = {
   title?: string;
@@ -38,35 +40,32 @@ export function HeaderPages({
   handleLogOut,
 }: Props) {
   const navigation = useNavigation();
-  const { SingOut } = useAuth();
-
-  function goBack() {
-    navigation.goBack();
-  }
+  const { User } = useAuth();
 
   return (
     <Container>
-      <HeaderButton isHome={isHome}>
-        <ContentPageHome>
-          {dayWeekFormat && date && monthFormat && (
-            <>
-              <Text
-                variant="PoppinsMedium"
-                fontSize={24}
-                color="WHITE"
-                marginBottom="md"
-                marginLeft="md"
-              >{`${dayWeekFormat}`}</Text>
-              <Text
-                variant="PoppinsMedium"
-                fontSize={18}
-                color="WHITE"
-                marginLeft="md"
-              >{`${date} de ${monthFormat}`}</Text>
-            </>
-          )}
-        </ContentPageHome>
-      </HeaderButton>
+      <ContentPageHome>
+        {dayWeekFormat && date && monthFormat && (
+          <>
+            <Text
+              variant="PoppinsMedium"
+              fontSize={24}
+              color="WHITE"
+              marginLeft="md"
+            >
+              Olá {User.name}
+            </Text>
+            <Text
+              variant="PoppinsMedium"
+              fontSize={18}
+              color="WHITE"
+              marginLeft="md"
+            >{`${abbreviateDayOfWeek(
+              dayWeekFormat
+            )} ,${date} de ${abbreviateDayOfWeek(monthFormat)}`}</Text>
+          </>
+        )}
+      </ContentPageHome>
 
       {isHome != true && (
         <ContainerTitle>
@@ -81,10 +80,12 @@ export function HeaderPages({
         </ContainerTitle>
       )}
 
-      {handleLogOut && (
-        <TouchableOpacity onPress={SingOut}>
-          <Ionicons name="log-out" size={20} color="WHITE" />
-        </TouchableOpacity>
+      {isHome && (
+        <ProfileImage
+          source={{
+            uri: `${User?.imageUrl}?time=${new Date().getTime()}`,
+          }}
+        />
       )}
     </Container>
   );

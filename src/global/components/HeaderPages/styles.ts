@@ -8,15 +8,16 @@ interface Props {
 
 export const Container = styled.View`
   width: 100%;
-  height: ${verticalScale(160)}px;
+  height: ${verticalScale(130)}px;
   background-color: ${({ theme }) => theme.colors.SECONDARY};
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
-  padding-top: 40px;
   padding-left: 22px;
   padding-right: 22px;
-  padding-bottom: 15px;
-  justify-content: flex-end;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const HeaderButton = styled.View<Props>`
@@ -50,3 +51,11 @@ export const ContainerTitle = styled.View`
 `;
 
 export const ContentPageHome = styled.View``;
+
+export const ProfileImage = styled.Image.attrs({
+  resizeMode: "cover",
+})`
+  height: 76px;
+  width: 76px;
+  border-radius: 60px;
+`;
