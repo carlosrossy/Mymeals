@@ -20,7 +20,6 @@ import { useAuth } from "../../../../global/hook/auth";
 export function SingIn() {
   const navigation = useNavigation<AuthScreenNavigationProp>();
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [isLoading, setIsloading] = useState(false);
   const { SingIn, islogin, forgotPassword } = useAuth();
 
   const {
@@ -32,14 +31,14 @@ export function SingIn() {
 
   function handleSingIn(data) {
     const { email, password } = data;
-    SingIn(email, password);
+    SingIn(email, password, toggleCheckBox);
   }
 
   function handleForgot(data) {
     const { email } = data;
     forgotPassword(email);
   }
-  
+
   return (
     <S.Container>
       <StatusBar

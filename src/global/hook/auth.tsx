@@ -23,7 +23,11 @@ type User = {
 };
 
 type AuthContextData = {
-  SingIn: (email: string, password: string) => Promise<void>;
+  SingIn: (
+    email: string,
+    password: string,
+    toggleCheckBox: boolean
+  ) => Promise<void>;
   registerAccount: (
     email: string,
     password: string,
@@ -54,7 +58,11 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [User, setUser] = useState<User | null>(null);
 
-  async function SingIn(email: string, password: string) {
+  async function SingIn(
+    email: string,
+    password: string,
+    toggleCheckBox: boolean
+  ) {
     setIsLogin(true);
 
     try {
@@ -80,7 +88,9 @@ function AuthProvider({ children }: AuthProviderProps) {
           sexo,
         };
 
-        await AsyncStorage.setItem(USER_COLLETION, JSON.stringify(userData));
+        if (toggleCheckBox) {
+          await AsyncStorage.setItem(USER_COLLETION, JSON.stringify(userData));
+        }
         setUser(userData);
       } else {
         Alert.alert("Login", "Perfil de usuário não encontrado no Firestore");
@@ -88,7 +98,9 @@ function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       const { code } = error;
 
-      if (code === "auth/user-not-found" || code === "auth/wrong-password") {
+      console.log(code);
+
+      if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-login") {
         Alert.alert("Login", "E-mail e/ou senha inválida.");
       } else {
         Alert.alert("Login", "Não foi possível realizar o Login.");
