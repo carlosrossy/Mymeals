@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import * as S from "./styles";
-import { View, TextInput, Platform, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 
 import Text from "../Text";
 
@@ -35,8 +41,15 @@ export function InputDate(props: InputDateProps) {
   ) => {
     setShowDatePicker(Platform.OS === "ios");
     if (selectedDate) {
-      setSelectedDate(selectedDate);
-      props.onChange(selectedDate);
+      if (selectedDate <= new Date()) {
+        setSelectedDate(selectedDate);
+        props.onChange(selectedDate);
+      } else {
+        Alert.alert(
+          "Data inválida",
+          "Selecione uma data anterior ou igual à data atual."
+        );
+      }
     }
   };
 
