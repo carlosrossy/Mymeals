@@ -18,11 +18,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <AuthProvider>
-          <NavigationContainer>
+        <NavigationContainer>
+          <AuthProvider>
             <MealProvider>{children}</MealProvider>
-          </NavigationContainer>
-        </AuthProvider>
+          </AuthProvider>
+        </NavigationContainer>
       </SafeAreaProvider>
     </ThemeProvider>
   );

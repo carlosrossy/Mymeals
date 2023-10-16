@@ -53,8 +53,6 @@ export function SingUp() {
       image,
       selectedGender.label
     );
-
-    navigation.navigate("SingIn");
   }
 
   const {

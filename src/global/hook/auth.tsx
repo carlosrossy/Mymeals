@@ -10,6 +10,8 @@ import { Alert } from "react-native";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { AuthScreenNavigationProp } from "../routes/auth.routes";
 
 type User = {
   id: string;
@@ -54,6 +56,7 @@ const USER_COLLETION = "@Mymeals:users";
 export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
+  const navigation = useNavigation<AuthScreenNavigationProp>();
   const [islogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [User, setUser] = useState<User | null>(null);
@@ -100,7 +103,11 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       console.log(code);
 
-      if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-login") {
+      if (
+        code === "auth/user-not-found" ||
+        code === "auth/wrong-password" ||
+        code === "auth/invalid-login"
+      ) {
         Alert.alert("Login", "E-mail e/ou senha inválida.");
       } else {
         Alert.alert("Login", "Não foi possível realizar o Login.");
@@ -141,10 +148,26 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       setIsLoading(false);
 
-      Alert.alert("Sucesso", "Seu perfil foi criado com sucesso!");
+      Alert.alert("Sucesso", "Seu perfil foi criado com sucesso.", [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.navigate("SingIn");
+          },
+        },
+      ]);
     } catch (error) {
+      setIsLoading(false);
       console.error("Erro ao criar conta:", error);
 
+      if (error.code === "auth/email-already-in-use") {
+        Alert.alert(
+          "Erro ao criar conta",
+          "O endereço de e-mail já está sendo usado por outra conta."
+        );
+      } else {
+        Alert.alert("Erro ao criar conta", "Ocorreu um erro ao criar a conta.");
+      }
       throw error;
     }
   }
